@@ -1,13 +1,21 @@
 import logo from './logo.svg';
 import './App.css';
+import { checkPlantInvasiveness } from './chatGPT';
 
 function App() {
-  const handleClick = () => {
+  async function handleClick() {
     console.log('clicked');
     const chatcontainer = document.querySelector('.chat-container');
-    chatcontainer.innerHTML = 'clicked';
-    // Run your function here, and change the HTML in the chat container.
-  }
+
+    try {
+        const result = await checkPlantInvasiveness("Garlic mustard", "Canada");
+        chatcontainer.innerHTML = result.join('<br>');
+         // Assuming result is an array of strings
+    } catch (error) {
+        console.error("Error:", error);
+        chatcontainer.innerHTML = "Error fetching data!";
+    }
+}
 
   return (
     <div className="App">
