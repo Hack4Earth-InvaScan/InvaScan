@@ -3,21 +3,24 @@ import './App.css';
 import React from 'react';
 import Webcam from 'react-webcam';
 import {useState, useCallback, useRef} from 'react';
-import IconButton from '@mui/core/IconButton';
-import DeleteIcon from '@mui/icons/Delete';
-import CameraswitchIcon from '@mui/icons/CameraSwitch';
-import { grey } from '@mui/core/colors';
+import IconButton from '@mui/material/IconButton';
+import CircleOutlinedIcon from '@mui/icons-material/CircleOutlined';
+import CameraswitchIcon from '@mui/icons-material/Cameraswitch';
+import { grey } from '@mui/material/colors';
 
 function App() {
 const webcamRef = useRef(null);
 const [webcamWidth, setWebcamWidth] = useState(500);
 const [webcamHeight, setWebcamHeight] = useState(500);
-const [cameraMode, setCameraMode] = useState('user');
-const [mirrored, setMirrored] = useState(true);
+const [cameraMode, setCameraMode] = useState('environment');
+const [mirrored, setMirrored] = useState(false);
 
   return (
     <div className="App">
       <div className='container'>
+        <div className='title'>
+          <h1>InvaScan</h1>
+        </div>
         <Webcam
           ref={webcamRef}
           muted
@@ -28,7 +31,6 @@ const [mirrored, setMirrored] = useState(true);
           }}
           mirrored={mirrored}
         />
-        
       </div>
       <IconButton
         color="primary"
@@ -53,12 +55,13 @@ const [mirrored, setMirrored] = useState(true);
       <IconButton
         color="primary"
         component="label"
-        style={{ position: 'absolute', bottom: 10, left: 15, zIndex: 9999 }}
+        size='large'
+        style={{ position: 'absolute', width: '256px', height: '256px',bottom: 10, left: "50%", transform: "translate(-50%, 0)", zIndex: 9999 }}
         onClick={() => {
 
         }}
       >
-        <DeleteIcon sx={{ color: grey[50] }} />
+        <CircleOutlinedIcon sx={{ color: grey[50] }} style={{ transform: 'scale(5)' }} />
       </IconButton>
     </div>
   );
