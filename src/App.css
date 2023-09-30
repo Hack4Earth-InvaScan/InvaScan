@@ -1,4 +1,13 @@
 .App {
-  text-align: center;
-  background-color: #282c34
+  display: flex;
+  background-color: #282c34;
+  min-height: 100vh;
+}
+
+.container {
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+  height: 100%;
+  background-color: #282c34;
 }
