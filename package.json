@@ -9,7 +9,10 @@
     "openai": "^4.10.0",
     "react": "^18.2.0",
     "react-dom": "^18.2.0",
+    "react-fullscreen-loading": "^0.0.4",
     "react-scripts": "5.0.1",
+    "react-webcam": "^7.1.1",
+    "request": "^2.88.2",
     "web-vitals": "^2.1.4"
   },
   "scripts": {
