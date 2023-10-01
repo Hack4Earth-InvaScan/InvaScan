@@ -9,7 +9,7 @@ import UndoIcon from '@mui/icons-material/Undo';
 import CheckIcon from '@mui/icons-material/Check';
 import {grey} from '@mui/material/colors';
 import recognize from './plantRecognition.js'
-import {LinearProgress} from '@mui/material';
+import {Chip, LinearProgress} from '@mui/material';
 
 function App() {
   const webcamRef = useRef(null);
@@ -21,6 +21,10 @@ function App() {
   const [plantName, setPlantName] = useState(null);
   const [confirmed, setConfirmed] = useState(false);
   const [spinner, setSpinner] = useState(false);
+  const [infoRetrieved, setInfoRetrieved] = useState(false);
+  const [invasive, setInvasive] = useState(false);
+  const [plantInfo, setPlantInfo] = useState("Loading plant information...");
+  const [contactInfo, setContactInfo] = useState(null);
 
   const capture = useCallback(() => {
     const imageSrc = webcamRef.current.getScreenshot();
@@ -40,6 +44,9 @@ function App() {
         setPlantName(data.Result[0].LatinName);
         console.log(plantName);
         setSpinner(false);
+
+        // Get information about the plant
+
       });
     }
   };
@@ -53,14 +60,14 @@ function App() {
         {
           imgSrc ? (
             <>
-              <img src={imgSrc} />
+              <img src={imgSrc} alt='Photo taken' />
               {
                 spinner ? (
                   <LinearProgress />
                 ) : null
               }
               {
-                confirmed ? (
+                (confirmed && !infoRetrieved) ? (
                   <div className='result'>
                     <h2>{plantName}</h2>
                   </div>
@@ -79,6 +86,19 @@ function App() {
               mirrored={mirrored}
             />
           )
+        }
+        {/* Information and result display */}
+        {
+          infoRetrieved ? (
+            <div className='resultContainer'>
+              <div style={{ display: 'flex', flexDirection: 'row' }}>
+              <Chip className="infoChip" color={invasive ? "error" : "success"} label={invasive ? "Invasive" : "Not Invasive"} style={{ alignSelf: 'center', width: '120px' }} />
+              <h2 style={{ padding:'4px' }}>{plantName}</h2>
+              </div>
+              <p>{plantInfo}</p>
+              <p>{contactInfo}</p>
+            </div>
+          ) : null
         }
       </div>
       {
