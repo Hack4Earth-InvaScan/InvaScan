@@ -44,7 +44,6 @@ function App() {
         console.log(data);
         setPlantName(data.Result[0].LatinName);
         console.log(plantName);
-        setSpinner(false);
 
         // Get information about the plant
         checkPlantInvasiveness(data.Result[0].LatinName, "Canada").then((data) => {
@@ -53,6 +52,7 @@ function App() {
           setPlantInfo(data[1]);
           setContactInfo(data[2]);
           setInfoRetrieved(true);
+          setSpinner(false);
         }
         );
       });
@@ -78,6 +78,7 @@ function App() {
                 (confirmed && !infoRetrieved) ? (
                   <div className='result'>
                     <h2>{plantName}</h2>
+                    <p>Loading plant information...</p>
                   </div>
                 ) : null
               }
