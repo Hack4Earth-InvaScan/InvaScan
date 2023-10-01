@@ -11,7 +11,7 @@ function Plantinfo() {
     useEffect(() => {
         // Call the async function and set its results to the state
         const fetchData = async () => {
-            const res = await checkPlantInvasiveness("sunflower", "Canada");
+            const res = await checkPlantInvasiveness();
             setResults(res);
         };
         fetchData();
