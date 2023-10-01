@@ -11,6 +11,7 @@ import {grey} from '@mui/material/colors';
 import recognize from './plantRecognition.js'
 import {Chip, LinearProgress} from '@mui/material';
 import {checkPlantInvasiveness} from './chatGPT.js';
+import CountrySelect from './countrySelector.js';
 
 function App() {
   const webcamRef = useRef(null);
@@ -26,11 +27,13 @@ function App() {
   const [invasive, setInvasive] = useState(false);
   const [plantInfo, setPlantInfo] = useState("Loading plant information...");
   const [contactInfo, setContactInfo] = useState(null);
+  const [country, setCountry] = useState("Canada");
 
-  const capture = useCallback(() => {
+  const capture = () => {
     const imageSrc = webcamRef.current.getScreenshot();
     setImgSrc(imageSrc);
-  }, [webcamRef]);
+    console.log(country);
+  };
 
   const retake = useCallback(() => {
     setImgSrc(null);
@@ -46,7 +49,7 @@ function App() {
         console.log(plantName);
 
         // Get information about the plant
-        checkPlantInvasiveness(data.Result[0].LatinName, "Canada").then((data) => {
+        checkPlantInvasiveness(data.Result[0].LatinName, country).then((data) => {
           console.log(data);
           setInvasive(data[0] === "Yes");
           setPlantInfo(data[1]);
@@ -149,7 +152,7 @@ function App() {
               component="label"
               size='large'
               disableRipple
-              style={{position: 'absolute', width: '256px', height: '256px', bottom: 10, left: "50%", transform: "translate(-50%, 0)", zIndex: 9999}}
+              style={{position: 'absolute', width: '256px', height: '256px', bottom: 10, left: "50%", transform: "translate(-50%, 0)", zIndex: 10}}
               onClick={() => {
                 capture();
               }}
@@ -177,6 +180,13 @@ function App() {
             >
               <CameraswitchIcon sx={{color: grey[50]}} />
             </IconButton>
+            <div style={{position: 'absolute', bottom: 10, left: 15, zIndex: 9999}}>
+              <CountrySelect
+                country={country}
+                setCountry={setCountry}
+                style={{position: 'absolute', bottom: 10, right: 15, zIndex: '9999'}}
+              />
+            </div>
           </>
 
         )
