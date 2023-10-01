@@ -23,7 +23,7 @@ async function checkPlantInvasiveness(plant, region) {
   result.push(chatCompletion.choices[0].message.content)
 
   chatCompletion = await openai.chat.completions.create({
-    messages: [{ role: 'user', content: `If I found an invasive plant in "${region}", which relevant organization should I contact?`}],
+    messages: [{ role: 'user', content: `If I found an invasive plant in "${region}", which relevant organization should I contact? If possible, please provide a phone number or email address.`}],
     model: 'gpt-4',
   });
   console.log(chatCompletion);
