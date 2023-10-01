@@ -12,26 +12,27 @@ async function checkPlantInvasiveness(plant, region) {
     messages: [{ role: 'user', content: `Is "${plant}" invasive in "${region}", please only respond with 'Yes' or 'No'.`}],
     model: 'gpt-4',
   });
-  console.log(chatCompletion);
-  result.push(chatCompletion.choices[0].message.content)
+
+  result.push(chatCompletion.choices[0].message.content);
 
   chatCompletion = await openai.chat.completions.create({
     messages: [{ role: 'user', content: `Can you give me some information about "${plant}"?`}],
     model: 'gpt-4',
   });
-  console.log(chatCompletion);
-  result.push(chatCompletion.choices[0].message.content)
 
-  chatCompletion = await openai.chat.completions.create({
+  result.push(chatCompletion.choices[0].message.content);
+
+  if (result[0] === "Yes") {
+    chatCompletion = await openai.chat.completions.create({
     messages: [{ role: 'user', content: `If I found an invasive plant in "${region}", which relevant organization should I contact?`}],
     model: 'gpt-4',
-  });
-  console.log(chatCompletion);
-  result.push(chatCompletion.choices[0].message.content)
-
-  console.log(result)
-
-  return result
+    });
+    result.push(chatCompletion.choices[0].message.content);
+  } else {
+    result.push("");
+  }
+  
+  return result;
 }
 
 export { checkPlantInvasiveness };
