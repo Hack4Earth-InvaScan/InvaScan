@@ -3,7 +3,7 @@ import './Plantinfo.css';
 import logo from './image/logo.pic';
 import dangerousImage from './image/dangerous.jpg'
 import safeImage from './image/safe.jpg'
-import {checkPlantInvasiveness} from '.chatGPT'
+import {checkPlantInvasiveness} from './chatGPT'
 import { sincheck } from './FAKEChatGPT';
 
 function Plantinfo() {
@@ -11,7 +11,7 @@ function Plantinfo() {
     useEffect(() => {
         // Call the async function and set its results to the state
         const fetchData = async () => {
-            const res = await checkPlantInvasiveness();
+            const res = await checkPlantInvasiveness("sunflower", "Canada");
             setResults(res);
         };
         fetchData();
