@@ -10,6 +10,7 @@ import CheckIcon from '@mui/icons-material/Check';
 import {grey} from '@mui/material/colors';
 import recognize from './plantRecognition.js'
 import {Chip, LinearProgress} from '@mui/material';
+import {checkPlantInvasiveness} from './chatGPT.js';
 
 function App() {
   const webcamRef = useRef(null);
@@ -46,7 +47,14 @@ function App() {
         setSpinner(false);
 
         // Get information about the plant
-
+        checkPlantInvasiveness(data.Result[0].LatinName, "Canada").then((data) => {
+          console.log(data);
+          setInvasive(data[0] === "Yes");
+          setPlantInfo(data[1]);
+          setContactInfo(data[2]);
+          setInfoRetrieved(true);
+        }
+        );
       });
     }
   };
@@ -91,9 +99,9 @@ function App() {
         {
           infoRetrieved ? (
             <div className='resultContainer'>
-              <div style={{ display: 'flex', flexDirection: 'row' }}>
-              <Chip className="infoChip" color={invasive ? "error" : "success"} label={invasive ? "Invasive" : "Not Invasive"} style={{ alignSelf: 'center', width: '120px' }} />
-              <h2 style={{ padding:'4px' }}>{plantName}</h2>
+              <div style={{display: 'flex', flexDirection: 'row'}}>
+                <Chip className="infoChip" color={invasive ? "error" : "success"} label={invasive ? "Invasive" : "Not Invasive"} style={{alignSelf: 'center', width: '120px'}} />
+                <h2 style={{padding: '4px'}}>{plantName}</h2>
               </div>
               <p>{plantInfo}</p>
               <p>{contactInfo}</p>

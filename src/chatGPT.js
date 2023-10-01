@@ -8,7 +8,7 @@ const openai = new OpenAI({
 async function checkPlantInvasiveness(plant, region) {
   const result = [];
 
-  const chatCompletion = await openai.chat.completions.create({
+  var chatCompletion = await openai.chat.completions.create({
     messages: [{ role: 'user', content: `Is "${plant}" invasive in "${region}", please only respond with 'Yes' or 'No'.`}],
     model: 'gpt-4',
   });
@@ -25,6 +25,8 @@ async function checkPlantInvasiveness(plant, region) {
     model: 'gpt-4',
   });
   result.push(chatCompletion.choices[0].text)
+
+  console.log(result)
 
   return result
 }
