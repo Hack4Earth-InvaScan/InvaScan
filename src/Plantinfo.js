@@ -1,10 +1,21 @@
-import React from 'react';
+import React, { useState, useEffect } from 'react';
 import './Plantinfo.css'; 
 import logo from './image/logo.pic';
 import dangerousImage from './image/dangerous.jpg'
 import safeImage from './image/safe.jpg'
+import {checkPlantInvasiveness} from '.chatGPT'
+import { sincheck } from './FAKEChatGPT';
 
 function Plantinfo() {
+    const [results, setResults] = useState([]);
+    useEffect(() => {
+        // Call the async function and set its results to the state
+        const fetchData = async () => {
+            const res = await checkPlantInvasiveness();
+            setResults(res);
+        };
+        fetchData();
+    }, []); // The empty array means this effect will run once when the component mounts
 
         // Define the test function that returns a string.
         const test1 = () => {
@@ -44,12 +55,12 @@ function Plantinfo() {
             <div className="detail-box">
                 <strong>Invasive (or not)</strong>
 
-                {test1() === "Yes" ? (
+                {results[0] === "Yes" ? (
     <>
         <p>The plant is dangerous</p>
         <img src={dangerousImage} alt="Dangerous Plant" className="smallImage" />
     </>
-) : test1() === "No" ? (
+) : results[0]  === "No" ? (
     <>
         <p>The plant is safe</p>
         <img src={safeImage} alt="Safe Plant" className="smallImage" />
@@ -59,19 +70,19 @@ function Plantinfo() {
                 <div className="detail-box">
                     
                     <strong>NameOfPlant</strong> {/* Making it bold as a title */}
-                    <p>{test2()}</p> {/* Display the result from the test function */}
+                    <p>{test2() }</p> {/* Display the result from the test function */}
                 </div>
             </div>
 
             <div className="detail-box">
                 Information
                 <strong>Information</strong> {/* Making it bold as a title */}
-                <p>{test3()}</p> {/* Display the result from the test function */}
+                <p>{results[1]}</p> {/* Display the result from the test function */}
             </div>
 
             <div className="detail-box">
                 <strong> Contact Relevent Dpt.</strong> {/* Making it bold as a title */}
-                <p>{test4()}</p> {/* Display the result from the test function */}
+                <p>{results[2]}</p> {/* Display the result from the test function */}
             </div>
         </div>
 
