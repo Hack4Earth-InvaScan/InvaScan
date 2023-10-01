@@ -31,7 +31,6 @@ async function checkPlantInvasiveness(plant, region) {
   } else {
     result.push("");
   }
-  
   return result;
 }
 
